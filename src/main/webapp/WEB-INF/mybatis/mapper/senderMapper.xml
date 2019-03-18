@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wooricard.pshgw.sender.repository.SenderMapper">
+	<insert id="insertPushData" parameterType="SenderDTO">
+        <selectKey keyProperty="seqNo" resultType="long" order="BEFORE">
+            SELECT SEQ_T_PUSH_REALTIME_MSG.NEXTVAL  FROM DUAL
+        </selectKey>	
+    
+    	INSERT INTO 
+    	  T_PUSH_REALTIME_MSG
+    	(
+		  REAL_SEQNO
+		, TRANS_CODE
+    	<if test="cmpgnid != null">
+		, CMPGN_ID
+     	</if>
+    	<if test="dnis != null">
+ 		, DNIS
+     	</if>
+		<if test="url != null">
+		, LINK_URL
+		</if>
+		, APP_ID 
+		, MESSAGE 
+		, SENDER_CODE 
+		, SERVICE_CODE 
+		, SUB_TITLE 
+		, CUID
+		, PUSH_TYPE
+		, PROCESS_DATE
+		, REGDATE
+		, MODDATE
+		, RESERVE_DATE
+		, SEND_TIME_LIMIT
+    	)
+    	VALUES
+    	(
+    	  #{seqNo}
+    	, #{transCode}
+     	<if test="cmpgnid != null">
+    	, #{cmpgnid}
+     	</if>
+     	<if test="dnis != null">
+    	, #{dnis}
+     	</if>
+    	<if test="url != null">
+    	, #{url}
+    	</if>
+    	, #{appId}
+    	, #{msg}
+    	, #{senderCode}
+    	, #{serviceCode}
+    	, #{title}
+    	, #{cuid}
+    	, #{type}
+    	, TO_CHAR(SYSDATE,'YYYYMMDDhh24miss')
+    	, SYSDATE
+    	, SYSDATE
+    	, SYSDATE
+    	, SYSDATE + 1
+    	)
+    </insert>
+ <!-- <insert id="insertPushData" parameterType="SenderDTO">
+        <selectKey keyProperty="seqNo" resultType="long" order="BEFORE">
+            SELECT SEQ_T_PUSH_REALTIME_MSG.NEXTVAL  FROM DUAL
+        </selectKey>	
+    
+    	INSERT INTO 
+    	  T_PUSH_REALTIME_MSG 
+    	(
+			REAL_SEQNO,
+ 			TRANS_CODE, 
+			MSG_CODE, 
+			TRANS_UNIQUE, 
+			PROCESS_DATE, 
+			CARD_NO, 
+			APV_NO, 
+			NAME_NO, 
+			TEL_NO, 
+			NAME, 
+			PUSH_TYPE, 
+			APV_MONTH, 
+			APVRQ_MTD_CD, 
+			APV_AMOUNT, 
+			CHK_BL, 
+			MCH_NAME, 
+			TRANS_DATE, 
+			APP_INST_YN, 
+			REJECT_REASON, 
+			SMART_APP_YN,
+			CMPGN_ID,
+			DNIS,
+			LINK_URL,
+			APP_ID, 
+			MESSAGE, 
+			EXT, 
+			SENDER_CODE, 
+			SERVICE_CODE, 
+			PRIORITY, 
+			SUB_TITLE, 
+			RESERVE_DATE,
+			SEND_TIME_LIMIT, 
+			CUID,
+ 			LEGACY_ID, 
+			PUSH_FAIL_SMS_SEND, 
+			SMS_READ_WAIT_MINUTE, 
+			DOZ_GCM_SEND, 
+			PROCESS_FLAG,
+			REGDATE, 
+			MODDATE 
+    	)
+    	VALUES
+    	(
+    	  #{seqNo}
+    	, #{transCode}
+    	, #{msgCode}
+    	, #{transUnique}
+    	, #{processDate}
+    	, #{cardNo}
+    	, #{apvNo}
+    	, #{nameNo}
+    	, #{telNo}
+    	, #{name}
+    	, #{pushType}
+    	, #{apvMonth}
+    	, #{apvrqMtdCd}
+    	, #{apvAmount}
+    	, #{chkBl}
+    	, #{mchName}
+    	, #{transDate}
+    	, #{appInstYn}
+    	, #{rejectReason}
+    	, #{smartAppYn}
+    	, #{cmpgnId}
+    	, #{dnsId}
+    	, #{linkUrl}
+    	, #{appId}
+    	, #{message}
+    	, #{ext}
+    	, #{senderCode}
+    	, #{serviceCode}
+    	, #{priority}
+    	, #{subTitle}
+    	, #{reserveDate}
+    	, #{sendTimeLimit}
+    	, #{cuid}
+    	, #{legacyId}
+    	, #{pushFailSmsSend}
+    	, #{smsReadWaiMinute}
+    	, #{dozGcmSend}
+    	, #{processFlag}
+    	, SYSDATE
+    	, SYSDATE	    	
+    	) 
+    </insert>   -->
+
+   
+</mapper>    

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wooricard.pshgw.eai.repository.EaiServerMapper">
+	<insert id="insertApvData" parameterType="EaiDTO">
+        <selectKey keyProperty="seqNo" resultType="long" order="BEFORE">
+            SELECT SEQ_T_PUSH_REALTIME_MSG.NEXTVAL FROM DUAL
+        </selectKey>	
+    
+    	INSERT INTO 
+    	  T_PUSH_REALTIME_MSG 
+    	(
+			REAL_SEQNO,
+			TRANS_CODE,
+			MSG_CODE,
+			TRANS_UNIQUE,
+			PROCESS_DATE,
+			APV_NO,
+			TEL_NO,
+			NAME,
+			PUSH_TYPE,
+			TRANS_TYPE,
+			APV_MONTH,
+			APVRQ_MTD_CD,
+			APV_AMOUNT,
+			CHK_BL,
+			MCH_NAME,
+			TRANS_DATE,
+			APP_INST_YN,
+			REJECT_REASON,
+			MESSAGE,
+			APP_ID, 
+			SENDER_CODE, 
+			SERVICE_CODE, 
+		<if test="title != null">
+			SUB_TITLE, 
+		</if>
+    	<if test="pageId != null">
+    		LINK_URL,
+    	</if>
+    	<if test="image != null">
+    		IMG_URL,
+    	</if>
+    	<if test="image2 != null">
+    		IMG_URL2,
+    	</if>
+    	<if test="image3 != null">
+    		IMG_URL3,
+    	</if>
+    	<if test="linkUrl1 != null">
+    		LINK_URL1,
+    	</if>
+    	<if test="linkUrl2 != null">
+    		LINK_URL2,
+    	</if>
+    	<if test="linkUrl3 != null">
+    		LINK_URL3,
+    	</if>
+    	<if test="type1 != null">
+    		TYPE1,
+    	</if>
+    	<if test="type2 != null">
+    		TYPE2,
+    	</if>
+    	<if test="type3 != null">
+    		TYPE3,
+    	</if>
+			CUID,
+			REGDATE,
+			RESERVE_DATE,
+			SEND_TIME_LIMIT
+    	)
+    	VALUES(
+    	  #{seqNo}
+    	, #{transCode}
+    	, #{msgCode}
+    	, #{transUnique}
+    	, #{processDate}
+    	, #{apvNo}
+    	, #{telNo}
+    	, #{name}
+    	, #{pushType}
+    	, #{transType}
+    	, #{apvMonth}
+    	, #{check}
+    	, #{apvAmount}
+    	, #{chkBl}
+    	, #{mchName}
+    	, #{transDate}
+    	, #{appInstYn}
+    	, #{rejectReason}
+     	, #{msg}
+     	, #{appId}
+     	, #{senderId}
+      	, #{serviceCode}
+   	    <if test="title != null">
+    	, #{title}
+    	</if>
+    	<if test="pageId != null">
+    	, #{pageId}
+    	</if>
+    	<if test="image != null">
+    	, #{image}
+    	</if>
+    	<if test="image2 != null">
+    	, #{image2}
+    	</if>
+    	<if test="image3 != null">
+    	, #{image3}
+    	</if>
+    	<if test="linkUrl1 != null">
+    	, #{linkUrl1}
+    	</if>
+    	<if test="linkUrl2 != null">
+    	, #{linkUrl2}
+    	</if>
+    	<if test="linkUrl3 != null">
+    	, #{linkUrl3}
+    	</if>
+    	<if test="type1 != null">
+    	, #{type1}
+    	</if>
+    	<if test="type2 != null">
+    	, #{type2}
+    	</if>
+    	<if test="type3 != null">
+    	, #{type3}
+    	</if>
+    	, #{cuid}
+    	, SYSDATE
+    	, SYSDATE
+    	, SYSDATE + 1
+    	)
+    </insert>
+
+	<select id="selectEaiMsg" parameterType="string" resultType="string">
+ 	  SELECT
+		TRANS_UNIQUE
+	  FROM
+		T_PUSH_REALTIME_MSG
+	  WHERE 
+	    TRANS_UNIQUE = #{code}  
+	</select>
+
+
+</mapper>

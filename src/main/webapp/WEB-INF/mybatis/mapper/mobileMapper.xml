@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wooricard.pshgw.mobile.repository.MobileMapper">
+    <update id="initBadgeNo" parameterType="MobileDTO">
+    	UPDATE 
+    	  T_PUSH_SUCCESS
+    	SET
+    	  STATUS = 3 ,
+    	  READDATE = SYSDATE
+    	WHERE
+    	  APPID = #{appid}
+    	  AND CUID = #{cuid}
+    </update>
+    
+    <select id="selectMsgList" parameterType="MobileDTO" resultType="MsgDTO">
+<!--     	SELECT * FROM (  
+			   SELECT 
+			   		ROWNUM RNUM
+                   ,COUNT(*) OVER() TOTAL
+                   ,A.*
+
+               FROM (
+					SELECT 
+						a.seqNo as msgId,
+						a.appid as appid,
+						a.cuid as cuid,
+						a.status as status,
+						b.sub_title as title,
+						b.message as text,
+						b.ext as payload,
+						TO_CHAR(b.regdate,'YYYYMMDDHHmmss') as regDate
+					FROM
+						T_PUSH_SUCCESS as a 
+						INNER JOIN T_PUSH_MSG_RECV_MASTER as b ON a.seqno = b.seqno
+					WHERE  1=1
+					AND status <![CDATA[<]]> 3 
+					order by regDate
+					<choose>
+						<when test="asc">ASC</when>
+		    			<otherwise>DESC</otherwise>						
+					</choose>
+                    ) A
+             )
+          WHERE RNUM BETWEEN 1 AND #{max}; -->
+<!--           
+			SELECT 
+				a.seqNo as msgId,
+				a.appid as appid,
+				a.cuid as cuid,
+				a.status as status,
+				b.sub_title as title,
+				b.message as text,
+				b.ext as payload,
+				TO_CHAR(b.regdate,'YYYYMMDDHH24miss') as regDate
+			FROM
+				T_PUSH_SUCCESS as a 
+				INNER JOIN T_PUSH_MSG_RECV_MASTER as b ON a.seqno = b.seqno
+			WHERE  1=1
+			AND status <![CDATA[<]]> 3
+			AND cuid = #{cuid} 
+			ORDER BY regDate
+			<choose>
+				<when test="asc">ASC</when>
+	   			<otherwise>DESC</otherwise>						
+			</choose>
+ -->			
+           SELECT 
+				a.seqNo as msgId,
+				a.appid,
+				a.cuid,
+				a.status,
+				b.sub_title as title,
+				b.message as text,
+				b.ext as payload,
+				TO_CHAR(b.regdate,'YYYYMMDDHH24miss') as regDate
+			FROM 
+			  MORPHEUS.T_PUSH_SUCCESS a 
+		    INNER JOIN 
+		      MORPHEUS.T_PUSH_MSG_RECV_MASTER as b 
+		    ON 
+		      a.seqno = b.seqno
+			WHERE
+			  a.cuid = #{cuid}
+			  and a.status <![CDATA[<]]> 3
+			ORDER BY 
+			  a.regDate			
+			<choose>
+				<when test="asc">ASC</when>
+	   			<otherwise>DESC</otherwise>						
+			</choose>			
+    </select>
+    
+    <select id="totalCount" parameterType="MobileDTO" resultType="int">
+        SELECT
+			COUNT(*)
+		FROM
+			T_PUSH_SUCCESS as a 
+			INNER JOIN T_PUSH_MSG_RECV_MASTER as b ON a.seqno = b.seqno 
+		where a.status <![CDATA[<]]> 3
+    </select>
+    
+</mapper>    

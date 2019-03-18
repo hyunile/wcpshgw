@@ -1,0 +1,776 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wooricard.pshgw.batch.repository.BatchMapper">
+
+    <insert id="insertHeader" parameterType="map">
+	  INSERT INTO 
+	    T_PUSH_BATCH_INFO
+	  (
+	    BATCH_ID
+	  , TRANS_CODE
+	  <if test="fileName != null">
+	  , FILE_NAME
+	  </if>
+	  , APP_ID
+	  , PROCESS_DATE
+	  <if test="processTime != null">
+	  , PROCESS_TIME
+	  </if>
+	  <if test="endDate != null">
+	  , END_DATE
+	  </if>
+	  <if test="endTime != null">
+	  , END_TIME
+	  </if>
+	  <if test="batchTitle != null">
+	  , TITLE 
+	  </if>
+	  , USE_TEMPLETE
+	  <if test="templete != null">
+	  , TEMPLETE 
+	  </if>
+	  <if test="pageId != null">
+	  , PAGE_ID 
+	  </if>
+	  <if test="key1 != null">
+	  , KEY1 
+	  </if>
+	  <if test="key2 != null">
+	  , KEY2 
+	  </if>
+	  <if test="imgUrl1 != null">
+	  , IMG_URL1 
+	  </if>
+	  <if test="imgUrl2 != null">
+	  , IMG_URL2 
+	  </if>
+	  <if test="imgUrl3 != null">
+	  , IMG_URL3 
+	  </if>
+	  <if test="linkUrl1 != null">
+	  , LINK_URL1 
+	  </if>
+	  <if test="linkUrl2 != null">
+	  , LINK_URL2 
+	  </if>
+	  <if test="linkUrl3 != null">
+	  , LINK_URL3 
+	  </if>
+	  <if test="type1 != null">
+	  , TYPE1 
+	  </if>
+	  <if test="type2 != null">
+	  , TYPE2 
+	  </if>
+	  <if test="type3 != null">
+	  , TYPE3 
+	  </if>
+      , TOTAL	
+      , LOADED  
+	  <if test="from != null">
+	  , DATE_FROM 
+	  </if>      
+	  <if test="to != null">
+	  , DATE_TO 
+	  </if>      
+	  , REGDATE
+	  )
+	  VALUES
+	  (
+	    #{batchId}
+	  , #{transCode}
+	  <if test="fileName != null">
+	  , #{fileName}
+	  </if>
+	  , #{appId}
+	  , #{processDate}
+	  <if test="processTime != null">
+	  , #{processTime}
+	  </if>
+	  <if test="endDate != null">
+	  , #{endDate}
+	  </if>
+	  <if test="endTime != null">
+	  , #{endTime}
+	  </if>
+	  <if test="batchTitle != null">
+	  , #{batchTitle}
+	  </if>
+	  , #{useTemplete}
+	  <if test="templete != null">
+	  , #{templete}
+	  </if>
+	  <if test="pageId != null">
+	  , #{pageId}
+	  </if>
+	  <if test="key1 != null">
+	  , #{key1}
+	  </if>
+	  <if test="key2 != null">
+	  , #{key2}
+	  </if>
+	  <if test="imgUrl1 != null">
+	  , #{imgUrl1}
+	  </if>
+	  <if test="imgUrl2 != null">
+	  , #{imgUrl2}
+	  </if>
+	  <if test="imgUrl3 != null">
+	  , #{imgUrl3} 
+	  </if>
+	  <if test="linkUrl1 != null">
+	  , #{linkUrl1} 
+	  </if>
+	  <if test="linkUrl2 != null">
+	  , #{linkUrl2} 
+	  </if>
+	  <if test="linkUrl3 != null">
+	  , #{linkUrl3} 
+	  </if>
+	  <if test="type1 != null">
+	  , #{type1} 
+	  </if>
+	  <if test="type2 != null">
+	  , #{type2} 
+	  </if>
+	  <if test="type3 != null">
+	  , #{type3} 
+	  </if>
+ 	  , #{total}
+ 	  , #{loaded}
+	  <if test="from != null">
+	  , #{from}
+	  </if>      
+	  <if test="to != null">
+	  , #{to}
+	  </if>    
+	  , SYSDATE	    	
+	  )
+	</insert>    
+	
+    <insert id="insertD2030Items" parameterType="list">
+      INSERT ALL
+      <foreach collection="list" item="item" separator=" ">
+        INTO T_PUSH_BATCH_MSG
+    	(
+		  BATCH_SEQNO
+		, BATCH_ID
+<!-- 		
+		, TEL_NO
+ -->		
+		, NAME
+		, PUSH_TYPE
+		, APP_INST_YN
+		, MESSAGE 
+		, SENDER_CODE 
+		, SERVICE_CODE
+		, CUID
+		, REGDATE
+		)
+		VALUES
+		(
+		  #{item.seqNo}
+		, #{item.batchId}
+<!-- 		
+		, #{item.telNo}
+ -->		
+		, #{item.name}
+		, #{item.pushType}
+		, #{item.appRg}
+		, #{item.message}
+		, #{item.senderId}
+		, #{item.serviceCode}
+		, #{item.cuid}
+		, SYSDATE
+		)
+    	</foreach>
+      SELECT * FROM DUAL	
+    </insert>
+
+    <insert id="insertD40Items" parameterType="list">
+      INSERT ALL
+      <foreach collection="list" item="item" separator=" ">
+        INTO T_PUSH_BATCH_MSG
+    	(
+		  BATCH_SEQNO
+		, BATCH_ID
+<!-- 		
+		, TEL_NO
+ -->		
+ 		, APV_NO
+		, NAME
+		, PUSH_TYPE
+		, TRANS_TYPE
+		, APV_MONTH
+		, APVRQ_MTD_CD
+		, APV_AMOUNT
+		, CHK_BL
+		, MCH_NAME
+		, TRANS_DATE
+		, APP_INST_YN
+		, SENDER_CODE 
+		, SERVICE_CODE
+		, CUID
+		, REGDATE
+		)
+		VALUES
+		(
+		  #{item.seqNo}
+		, #{item.batchId}
+<!-- 		
+		, #{item.telNo}
+ -->		
+		, #{item.apvNo}
+		, #{item.name}
+		, #{item.pushType}
+		, #{item.transType}
+		, #{item.apvMonth}
+		, #{item.apvType}
+		, #{item.apvAmount}
+		, #{item.chkBl}
+		, #{item.mchName}
+		, #{item.transDate}
+		, #{item.appRg}
+		, #{item.senderId}
+		, #{item.serviceCode}
+		, #{item.cuid}
+		, SYSDATE
+		)
+    	</foreach>
+      SELECT * FROM DUAL	
+    </insert>
+
+    <insert id="insertD50Items" parameterType="list">
+      INSERT ALL
+      <foreach collection="list" item="item" separator=" ">
+        INTO T_PUSH_BATCH_MSG
+    	(
+		  BATCH_SEQNO
+		, BATCH_ID
+		, PUSH_TYPE
+		, MESSAGE 
+		, SENDER_CODE 
+		, SERVICE_CODE
+		, CUID
+		, REGDATE
+		)
+		VALUES
+		(
+		  #{item.seqNo}
+		, #{item.batchId}
+		, #{item.pushType}
+		, #{item.message}
+		, #{item.senderId}
+		, #{item.serviceCode}
+		, #{item.cuid}
+		, SYSDATE
+		)
+    	</foreach>
+      SELECT * FROM DUAL	
+    </insert>
+
+    <insert id="insertB20Items" parameterType="list">
+      INSERT ALL
+      <foreach collection="list" item="item" separator=" ">
+        INTO T_PUSH_BATCH_MSG
+    	(
+		  BATCH_SEQNO
+		, BATCH_ID
+		, PUSH_TYPE
+		, MESSAGE 
+		, SENDER_CODE 
+		, SERVICE_CODE
+		, CUID
+		, REGDATE
+		)
+		VALUES
+		(
+		  #{item.seqNo}
+		, #{item.batchId}
+		, #{item.pushType}
+		, #{item.message}
+		, #{item.senderId}
+		, #{item.serviceCode}
+		, #{item.cuid}
+		, SYSDATE
+		)
+    	</foreach>
+      SELECT * FROM DUAL	
+    </insert>
+        
+    <insert id="insertCmsItems" parameterType="list">
+      INSERT ALL
+      <foreach collection="list" item="item" separator=" ">
+        INTO T_PUSH_BATCH_MSG
+    	(
+		  BATCH_SEQNO
+		, BATCH_ID
+		, PUSH_TYPE
+		, MESSAGE 
+		, SENDER_CODE 
+		, SERVICE_CODE
+		, CUID
+		, REGDATE
+		)
+		VALUES
+		(
+		  #{item.seqNo}
+		, #{item.batchId}
+		, #{item.pushType}
+		, #{item.message}
+		, #{item.senderId}
+		, #{item.serviceCode}
+		, #{item.cuid}
+		, SYSDATE
+		)
+      </foreach>
+      SELECT * FROM DUAL	
+    </insert>
+
+	<select id="selectMaxSeqNo" parameterType="map" resultType="long">
+	  SELECT
+	  	NVL(MAX(BATCH_SEQNO), #{min})
+	  FROM
+	  (
+	  	SELECT
+	  	  BATCH_SEQNO
+	  	FROM
+	      T_PUSH_BATCH_MSG
+	    WHERE
+	      BATCH_SEQNO <![CDATA[>]]> #{min}
+	      AND BATCH_SEQNO <![CDATA[<]]> #{max}
+	    UNION
+	  	SELECT
+	  	  BATCH_SEQNO
+	  	FROM
+	      T_PUSH_BATCH_MSG_COMPLETED
+	    WHERE
+	      BATCH_SEQNO <![CDATA[>]]> #{min}
+	      AND BATCH_SEQNO <![CDATA[<]]> #{max}
+	  )	  
+	</select>
+
+	<select id="selectBatchFileCount" parameterType="string" resultType="int">
+	  SELECT
+	  	COUNT(*)
+	  FROM
+	    T_PUSH_BATCH_INFO
+	  WHERE
+	    FILE_NAME = #{file}
+	</select>
+
+	<delete id="deleteHeader" parameterType="string">
+	  DELETE FROM
+	    T_PUSH_BATCH_INFO
+	  WHERE
+	    BATCH_ID = #{batchId}
+	</delete>
+
+	<delete id="deleteItems" parameterType="string">
+	  DELETE FROM
+	    T_PUSH_BATCH_MSG
+	  WHERE
+	    BATCH_ID = #{batchId}
+	</delete>
+		
+	<delete id="deleteOldDataFromPushMaster" parameterType="int">
+	  DELETE FROM
+	    T_PUSH_MSG_RECV_MASTER
+	  WHERE
+	    REGDATE <![CDATA[<]]> SYSDATE - #{days}
+	</delete>
+
+	<delete id="deleteOldDataFromPushSuccess" parameterType="int">
+	  DELETE FROM
+	    T_PUSH_SUCCESS
+	  WHERE
+	    REGDATE <![CDATA[<]]> SYSDATE - #{days}
+	</delete>
+
+	<delete id="deleteOldDataFromPushFail" parameterType="int">
+	  DELETE FROM
+	    T_PUSH_FAIL
+	  WHERE
+	    REGDATE <![CDATA[<]]> SYSDATE - #{days}
+	</delete>
+
+	<delete id="deleteOldDataFromRealtimeCompleted" parameterType="int">
+	  DELETE FROM
+	    T_PUSH_REALTIME_MSG_COMPLETED
+	  WHERE
+	    REGDATE <![CDATA[<]]> SYSDATE - #{days}
+	</delete>
+
+	<delete id="deleteOldDataFromBatchCompleted" parameterType="int">
+	  DELETE FROM
+	    T_PUSH_BATCH_MSG_COMPLETED
+	  WHERE
+	    REGDATE <![CDATA[<]]> SYSDATE - #{days}
+	</delete>
+
+	<delete id="deleteOldDataFromBatchInfo" parameterType="int">
+	  DELETE FROM
+	    T_PUSH_BATCH_INFO
+	  WHERE
+	    REGDATE <![CDATA[<]]> SYSDATE - #{days}
+	</delete>
+
+	<delete id="deleteOldDataFromBatchLog" parameterType="int">
+	  DELETE FROM
+	    T_PUSH_BATCHJOB_LOG
+	  WHERE
+	    REGDATE <![CDATA[<]]> SYSDATE - #{days}
+	</delete>
+
+	<select id="selectResInfo" parameterType="string" resultType="ResData" >
+  SELECT
+	    TRANS_CODE as transCode
+	  , PUSH_TYPE as pushType
+	  , TITLE
+	  , PAGE_ID as pageId
+	  , IMAGE
+	  , IMAGE2
+	  , IMAGE3
+	  , LINK_URL1 as linkUrl1
+	  , LINK_URL2 as linkUrl2
+	  , LINK_URL3 as linkUrl3
+	  , TYPE1	  
+	  , TYPE2	  
+	  , TYPE3	  
+	  , RESERVE_TIME as reserveTime
+	  , SEND_LIMIT as sendLimit
+	  FROM
+	    T_PUSH_RES_INFO
+	  WHERE
+	    TRANS_CODE = #{code}
+	</select>
+	
+	<select id="selectResInfoList" parameterType="string" resultType="ResData" >
+	  SELECT
+	    TRANS_CODE as transCode
+	  , PUSH_TYPE as pushType
+	  , DESCRIPTION
+	  , TITLE
+	  , PAGE_ID as pageId
+	  , IMAGE
+	  , IMAGE2
+	  , IMAGE3
+	  , LINK_URL1 as linkUrl1
+	  , LINK_URL2 as linkUrl2
+	  , LINK_URL3 as linkUrl3
+	  , TYPE1	  
+	  , TYPE2	  
+	  , TYPE3	  
+	  FROM
+	    T_PUSH_RES_INFO
+	  WHERE
+	    TRANS_CODE = #{code}
+	  ORDER BY
+	    RES_ID
+	</select>
+	
+	<select id="selectSingleCompletedMessagesByHour" parameterType="DateData" resultType="map" >
+      SELECT
+        'S'||LPAD(TO_CHAR(R.REAL_SEQNO), 12, '0') as SEQNO, R.APP_ID as APPID, R.CUID, NVL(TRANS_UNIQUE, ' ') as LEGACYID,
+        NVL(S.PNSID, ' ') AS TYPE, R.SUB_TITLE AS TITLE, R.MESSAGE, R.EXT, 
+        CASE WHEN F.RESULTCODE IS NOT NULL THEN C.CODE ELSE R.RESULT_CODE END AS RESULTCODE, 
+        CASE WHEN F.RESULTCODE IS NOT NULL THEN C.MSG||' [ '||F.RESULTCODE||' : '||F.RESULTMSG||' ]' ELSE R.RESULT_MSG END AS RESULTMSG, 
+        NVL(S.STATUS, 0) as STATUS, R.REGDATE, S.READDATE
+      FROM
+        MORPHEUS.T_PUSH_REALTIME_MSG_COMPLETED R
+      LEFT JOIN 
+        MORPHEUS.T_PUSH_SUCCESS S
+      ON 
+        R.PUSH_SEQNO = S.SEQNO
+      LEFT JOIN 
+        MORPHEUS.T_PUSH_FAIL F
+      ON 
+        R.PUSH_SEQNO = F.SEQNO
+      LEFT JOIN 
+        MORPHEUS.T_PUSH_RESULT_CODE C
+      ON 
+        F.RESULTCODE = C.ERR_NUM2
+      WHERE 
+        R.REGDATE BETWEEN #{current} 
+        AND #{next}
+    </select>
+    
+	<select id="selectBatchCompletedMessagesByHour" parameterType="DateData" resultType="map" >
+      SELECT
+        'B'||LPAD(TO_CHAR(B.BATCH_SEQNO), 12, '0') as SEQNO, B.APP_ID as APPID, B.CUID, NVL(I.KEY1, ' ') as LEGACYID,
+        NVL(S.PNSID, ' ') AS TYPE, B.SUB_TITLE AS TITLE, B.MESSAGE, B.EXT, 
+        CASE WHEN F.RESULTCODE IS NOT NULL THEN C.CODE ELSE B.RESULT_CODE END AS RESULTCODE, 
+        CASE WHEN F.RESULTCODE IS NOT NULL THEN C.MSG||' [ '||F.RESULTCODE||' : '||F.RESULTMSG||' ]' ELSE B.RESULT_MSG END AS RESULTMSG, 
+        NVL(S.STATUS, 0) as STATUS, B.REGDATE, S.READDATE
+      FROM
+        MORPHEUS.T_PUSH_BATCH_MSG_COMPLETED B
+      JOIN
+        MORPHEUS.T_PUSH_BATCH_INFO I
+      ON 
+        B.BATCH_ID = I.BATCH_ID  
+      LEFT JOIN 
+        MORPHEUS.T_PUSH_SUCCESS S
+      ON 
+        B.PUSH_SEQNO = S.SEQNO
+      LEFT JOIN 
+        MORPHEUS.T_PUSH_FAIL F
+      ON 
+        B.PUSH_SEQNO = F.SEQNO
+      LEFT JOIN 
+        MORPHEUS.T_PUSH_RESULT_CODE C
+      ON 
+        F.RESULTCODE = C.ERR_NUM2
+      WHERE 
+        B.REGDATE BETWEEN #{current} 
+        AND #{next}
+	</select>
+	
+<!-- 	
+	<select id="selectRealTimeCompletedMsgCount" parameterType="DateData" resultType="int" >
+      SELECT
+        COUNT(*)
+      FROM
+        MORPHEUS.T_PUSH_REALTIME_MSG_COMPLETED R
+      LEFT JOIN 
+        MORPHEUS.T_PUSH_SUCCESS S
+      ON 
+        R.PUSH_SEQNO = S.SEQNO
+	WHERE 
+        R.REGDATE <![CDATA[>=]]> TO_DATE(#{current}, 'YYYYMMDD') 
+        AND R.REGDATE <![CDATA[<]]> TO_DATE(#{next}, 'YYYYMMDD')
+	</select>	
+    
+	<select id="selectBatchCompletedMsgCount" parameterType="DateData" resultType="int" >
+      SELECT
+        COUNT(*)
+      FROM
+        MORPHEUS.T_PUSH_BATCH_MSG_COMPLETED  B
+      JOIN
+        MORPHEUS.T_PUSH_BATCH_INFO I
+      ON 
+        B.BATCH_ID = I.BATCH_ID  
+      LEFT JOIN 
+        MORPHEUS.T_PUSH_SUCCESS S
+      ON 
+        B.PUSH_SEQNO = S.SEQNO
+      WHERE 
+        B.REGDATE <![CDATA[>=]]> TO_DATE(#{current}, 'YYYYMMDD') 
+        AND B.REGDATE <![CDATA[<]]> TO_DATE(#{next}, 'YYYYMMDD')
+	</select>	
+ -->
+	<select id="selectFailSmsList" resultType="map">
+	
+	 SELECT
+	 	comp.MESSAGE
+	  ,	comp.TEL_NO
+	  ,  fail.SEQNO
+	  , comp.PUSH_SEQNO
+	  , fail.RESULTCODE
+	  , fail.RESULTMSG
+ 	  , comp.SUB_TITLE	  
+	  , comp.SMS_SENT
+	  , comp.CUID
+	  , comp.APP_ID
+	 FROM T_PUSH_REALTIME_MSG_COMPLETED comp  INNER JOIN T_PUSH_FAIL fail ON comp.PUSH_SEQNO = fail.SEQNO
+	 WHERE comp.SMS_SENT = 'N'
+	 AND comp.TEL_NO IS NOT NULL 
+	 AND comp.REGDATE BETWEEN SYSDATE - 10/24/60 AND SYSDATE
+
+	</select>
+	
+	<update id="updateSmsSent" parameterType="string" >
+	  UPDATE T_PUSH_REALTIME_MSG_COMPLETED 
+	  SET SMS_SENT = 'Y'
+	  WHERE
+	    PUSH_SEQNO = #{PUSH_SEQNO}
+	</update>
+	
+	<update id="updateBatchStatus" parameterType="map" >	
+      UPDATE 
+        T_PUSH_BATCHJOB_STATUS
+      SET
+        DIRECTORY = #{dir}
+      , FILE_PREFIX = #{prefix}
+      , RUN_TIME = #{time}
+      , MODDATE = SYSDATE
+      WHERE
+        JOB_CODE = #{code}
+	</update>
+
+	<insert id="insertBatchStatus" parameterType="map" >	  
+      INSERT INTO 
+        T_PUSH_BATCHJOB_STATUS
+      (
+        JOB_CODE
+      , DIRECTORY
+      , FILE_PREFIX
+      , RUN_TIME
+      , REGDATE
+      )
+      VALUES
+      (
+        #{code}
+      , #{dir}
+      , #{prefix}
+      , #{time}
+      , SYSDATE
+      )	
+	</insert>
+	
+	<insert id="insertBatchLog" parameterType="map" >	  
+        <selectKey keyProperty="seqNo" resultType="long" order="BEFORE">
+            SELECT SEQ_T_PUSH_BATCHJOB_LOG.NEXTVAL  FROM DUAL
+        </selectKey>	
+      INSERT INTO 
+        T_PUSH_BATCHJOB_LOG
+      (
+        SEQNO
+      , JOB_CODE
+      , DIRECTORY
+      , FILE_NAME
+      , RESULT
+      , START_TIME
+      , FINISH_TIME
+      , TOTAL
+      , LOADED
+      , REGDATE
+      )
+      VALUES
+      (
+        #{seqNo}
+      , #{code}
+      , #{dir}
+      , #{file}
+      , #{result}
+      , #{start}
+      , #{finish}
+      , #{total}
+      , #{loaded}
+      , SYSDATE
+      )	
+	</insert>
+	
+	<select id="selectAllowedTime" resultType="map">
+      SELECT
+        ALLOW_YN as allow
+      , BEGIN_TIME as beginTime
+      , END_TIME as endTime
+      FROM
+        MORPHEUS.T_PUSH_CONFIG		
+	</select>
+	
+	<update id="updateAutoPauseToSend">
+      UPDATE MORPHEUS.T_PUSH_BATCH_INFO
+      SET 
+        STATUS = 'S'
+      , MODDATE = SYSDATE
+      WHERE
+        STATUS = 'A'	
+	</update>
+
+	<update id="updateSendToAutoPause">
+      UPDATE MORPHEUS.T_PUSH_BATCH_INFO
+      SET 
+        STATUS = 'A'
+      , MODDATE = SYSDATE
+      WHERE
+        STATUS = 'S'	
+	</update>
+
+	<!-- 관리자에게 SMS발송을 위해 에러 체크 -->
+	<select id="selectErrCnt" parameterType="string" resultType="int">
+	 SELECT
+	 	COUNT(*)
+	 FROM MORPHEUS.T_PUSH_FAIL
+	 WHERE REGDATE BETWEEN SYSDATE - #{timeCnt}/24/60 and SYSDATE
+	 AND RESULTCODE NOT IN ('6400')
+	    <!-- TO_CHAR(REGDATE, 'YYYYMMDDhh24') BETWEEN TO_CHAR(SYSDATE - #{timeCnt} /24, 'YYYYMMDDhh24') and TO_CHAR(SYSDATE, 'YYYYMMDDhh24') -->
+	</select>
+	
+	<!-- 관리자에서 세팅한 시간안에 보낸 대상자에게 다시 보내지않기 위한 쿼리 -->
+	<select id="smsDupCheck" parameterType="string" resultType="int">
+	SELECT 
+		COUNT(*)
+	FROM T_PUSH_SMS
+	WHERE REGDATE BETWEEN SYSDATE - #{timeCnt}/24/60 and SYSDATE
+	AND APPID = 'admin'
+	AND CUID = #{CUID}
+	</select>
+	
+	<!-- T_PUSH_BATCHJOB_LOG 에 result가 0인 list -->
+	<select id="selectBatchJobLogList" resultType="map">
+	SELECT 
+	 	SEQNO,
+	 	FILE_NAME
+	 FROM T_PUSH_BATCHJOB_LOG
+	 WHERE RESULT = 0
+	 AND REGDATE BETWEEN SYSDATE - 10/24/60 and SYSDATE
+	 ORDER by SEQNO DESC
+	 </select>
+	 
+	 <!-- batch 중단 sms 발송 중복 체크 -->
+	<select id="batchSmsDupCheck" parameterType="string" resultType="int">
+	SELECT 
+		COUNT(*)
+	FROM T_PUSH_SMS
+	WHERE REGDATE BETWEEN SYSDATE - 10/24/60 and SYSDATE 
+	AND APPID = 'batchJobLog'
+	AND seqno = #{seqNo}
+	</select>
+	
+	<!-- 관리자화면에서 세팅한 SMS발송설정을 가져온다.  -->
+	<select id="selectSmsTimeErrList" resultType="map">
+	SElECT
+		TIME_CNT,
+		ERR_CNT,
+		ALLOW_YN,
+		REG_ID,
+		ADMIN_TEL,
+		REGDATE
+	FROM MORPHEUS.TB_STO_ADMIN_SMS
+	</select>
+	
+	<select id="selectSmsPhoneList" resultType="map">
+		 SELECT
+		     A.USER_ID
+		    ,A.USER_TP
+		    ,A.USE_YN
+		    ,B.AUTH_GRP_ID
+		FROM MORPHEUS.TB_SYS_USER A
+		LEFT JOIN MORPHEUS.TB_SYS_USER_AUTH_GRP B ON A.USER_ID = B.USER_ID
+		LEFT JOIN MORPHEUS.TB_SYS_AUTH_GRP C ON B.AUTH_GRP_ID = C.AUTH_GRP_ID
+		WHERE B.AUTH_GRP_ID = '0000000004'
+	</select>
+
+	<update id="dropPartition" parameterType="map">
+	  ALTER TABLE ${table} DROP PARTITION ${partition}
+	</update>
+	
+	<select id="selectPartitionList" parameterType="map" resultType="string"> 
+	  SELECT 
+	    PARTITION_NAME
+	  FROM 
+	    ALL_TAB_PARTITIONS 
+	  WHERE 
+	    TABLE_NAME = #{table}
+	  	AND PARTITION_NAME <![CDATA[<=]]> #{partition}
+	</select>
+	
+	<select id="selectCanceledBatch" resultType="string"> 
+	  SELECT 
+	    BATCH_ID
+	  FROM 
+	    T_PUSH_BATCH_INFO
+	  WHERE 
+	    REGDATE >= TRUNC(SYSDATE - 1)
+	  	AND STATUS = 'C'
+	</select>
+	
+	<delete id="deleteCanceledBatch" parameterType="string">
+	  DELETE FROM
+	    T_PUSH_BATCH_MSG
+	  WHERE
+	    BATCH_ID = #{batchId}
+	</delete>
+</mapper>    

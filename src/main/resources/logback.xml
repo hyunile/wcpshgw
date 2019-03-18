@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} %5p [%c{1}] %m%n</pattern> 
+		</encoder>
+	</appender>
+
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	
+		<file>/morpheus/log/gw/gateway.log</file>
+		<append>true</append>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+
+			<fileNamePattern>/morpheus/log/gw/gateway.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>60</maxHistory>
+		</rollingPolicy>		
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} %5p [%c{1}] %m%n</pattern>
+		</encoder>
+	</appender>
+	
+	<logger name="org.springframework" level="INFO" />
+	
+	<logger name="java.sql" level="INFO" additivity="false" />
+	<logger name="java.sql.connection" level="INFO" additivity="false" />
+
+	<logger name="org.apache.http.impl.conn" level="INFO" additivity="false" />
+	<logger name="org.mybatis.spring" level="INFO" additivity="false" />
+
+	<root level="INFO">
+	 
+		<appender-ref ref="STDOUT"  />
+		
+		<!-- <appender-ref ref="FILE" /> -->
+	</root>
+	
+</configuration>
+

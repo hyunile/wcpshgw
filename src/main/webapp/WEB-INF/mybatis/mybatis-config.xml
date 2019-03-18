@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+<!-- 	<typeAliases>
+	    <typeAlias alias="MessageData"	type="com.wooricard.scheduler.entity.MessageData" />    
+	    <typeAlias alias="ResultData"	type="com.wooricard.scheduler.entity.ResultData" />    
+	    <typeAlias alias="QueryParams"	type="com.wooricard.scheduler.common.QueryParamsEx" />   
+   	</typeAliases>
+ -->
+ 
+	 <typeAliases>
+	    <typeAlias alias="SenderDTO"		type="com.wooricard.pshgw.sender.dto.SenderDTO" />
+	    <typeAlias alias="MobileDTO"		type="com.wooricard.pshgw.mobile.dto.MobileDTO" />
+	    <typeAlias alias="MsgDTO"			type="com.wooricard.pshgw.mobile.dto.MsgDTO" />
+	    <typeAlias alias="EaiDTO"			type="com.wooricard.pshgw.eai.dto.EaiDTO" />
+	    <typeAlias alias="ResData"			type="com.wooricard.pshgw.batch.repository.ResData" />
+	    <typeAlias alias="SmsData"			type="com.wooricard.pshgw.batch.repository.SmsData" />
+	    <typeAlias alias="DateData"			type="com.wooricard.pshgw.batch.repository.DateData" />
+<!-- 	    
+	    <typeAlias alias="CompletedData"  type="com.wooricard.pshgw.batch.repository.CompletedData"/>
+ -->	    
+   	</typeAliases>
+</configuration>
+	    
